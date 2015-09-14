@@ -5,7 +5,7 @@ import (
 )
 
 type Exchange interface {
-	HandleRequests(writer http.ResponseWriter, request *http.Request)
+	HandleRequests() http.HandlerFunc
 }
 
 
