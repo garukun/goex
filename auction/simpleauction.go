@@ -12,7 +12,7 @@ type SimpleAuction struct {
 	table <-chan *BidResponse
 }
 
-func (this *SimpleAuction) AddBidder(bidder Bidder) {
+func (this *SimpleAuction) Invite(bidder Bidder) {
 	this.bidders = append(this.bidders, bidder)
 }
 
@@ -25,13 +25,13 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 	wg.Add(len(this.bidders))
 	for _, bidder := range this.bidders {
 		go func() {
-			response, err := bidder.Bid(auctionContext, bidRequest)
+			bidResponse, err := bidder.Bid(auctionContext, bidRequest)
 			defer wg.Done()
 			if err != nil {
 				// Log error
 				return
 			}
-			this.table <- <-response
+			this.table <- <-bidResponse
 		}()
 	}
 
