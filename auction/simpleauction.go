@@ -54,22 +54,27 @@ func (this *SimpleAuction) hammer(done <-chan bool) <-chan Result {
 		for {
 			select {
 			case bid := <- this.table:
-				if bid.price > winnder.price {
+				if canOutbid(winner, bid) {
 					winner = &bid
 				}
 			case <-done:
+				// TODO(stevej): Type mismatch here...
+				result <- winner
+
 				close(this.table)
+				// It's possible that in other kinds of auctions we don't close the result channel
+				close(result)
 				return
 			}
 		}
-
-		// TODO(stevej): Type mismatch here...
-		result <- winner
-
-		// It's possible that in other kinds of auctions we don't close the result channel
-		close(result)
 	}()
 
 	return result
+}
+
+// TODO(stevej): This should probably be Bid instead of BidResponse, and also refactored into a
+// BidResponse/Bid interface.
+func canOutbid(left, right *BidResponse) bool {
+	return false;
 }
 
