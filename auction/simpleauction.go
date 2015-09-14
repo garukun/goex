@@ -16,7 +16,6 @@ func (this *SimpleAuction) AddBidder(bidder Bidder) {
 	this.bidders = append(this.bidders, bidder)
 }
 
-// TODO(stevej): Result probably needs to be an interface.
 func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 	auctionContext := NewContext(context.Background())
 	done := make(chan bool, 1)
