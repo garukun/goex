@@ -2,14 +2,13 @@ package auction
 import (
 	"sync"
 	"golang.org/x/net/context"
-	"go/constant"
 )
 
 type SimpleAuction struct {
 	bidders []Bidder
 
 	// Auction table where bidders put down their bids.
-	table <-chan *BidResponse
+	table chan *BidResponse
 }
 
 func (this *SimpleAuction) Invite(bidder Bidder) {
@@ -20,7 +19,7 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 	auctionContext := NewContext(context.Background())
 	done := make(chan bool, 1)
 
-	var wg = sync.WaitGroup
+	var wg sync.WaitGroup
 
 	wg.Add(len(this.bidders))
 	for _, bidder := range this.bidders {
@@ -53,18 +52,18 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 // Act of hammering to follow through the bids to finalize on the Hammer Price of the auction.
 func (this *SimpleAuction) hammer(done <-chan bool) <-chan Result {
 	result := make(chan Result, 1)
-	var winner = &BidResponse
+	var winner *BidResponse
 
 	go func() {
 		for {
 			select {
 			case bid := <- this.table:
 				if canOutbid(winner, bid) {
-					winner = &bid
+					winner = bid
 				}
 			case <-done:
 				// TODO(stevej): Type mismatch here...
-				result <- winner
+				//result <- winner
 
 				close(this.table)
 				// It's possible that in other kinds of auctions we don't close the result channel

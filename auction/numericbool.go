@@ -23,7 +23,7 @@ func (this *NumericBool) UnmarshalJSON(bytes []byte) error  {
 	} else if num == 1 {
 		*this = NumericBool(true)
 	} else {
-		return json.UnsupportedValueError
+		return &json.UnsupportedValueError{}
 	}
 
 	return nil
