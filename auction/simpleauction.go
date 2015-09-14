@@ -18,7 +18,7 @@ func (this *SimpleAuction) AddBidder(bidder Bidder) {
 
 // TODO(stevej): Result probably needs to be an interface.
 func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
-	auctionContext := context.Background()
+	auctionContext := NewContext(context.Background())
 	done := make(chan bool, 1)
 
 	var wg = sync.WaitGroup
