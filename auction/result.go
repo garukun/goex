@@ -1,5 +1,6 @@
 package auction
 
-type Result struct {
-
+type Result interface {
+	HasResponse() bool
+	GetResponse() BidResponse
 }

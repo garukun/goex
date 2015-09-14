@@ -1,5 +1,5 @@
 package auction
 
 type Auction interface {
-	Run() <-chan Result
+	Run(bidRequest *BidRequest) <-chan Result
 }
