@@ -42,10 +42,11 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 		done <- true
 	}()
 
-	return this.startAuction(done)
+	return this.hammer(done)
 }
 
-func (this *SimpleAuction) startAuction(done <-chan bool) <-chan Result {
+// Act of hammering to follow through the bids to finalize on the Hammer Price of the auction.
+func (this *SimpleAuction) hammer(done <-chan bool) <-chan Result {
 	result := make(chan Result, 1)
 	var winner = &BidResponse
 
