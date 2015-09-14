@@ -31,14 +31,20 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 				// Log error
 				return
 			}
-			this.table <- <-bidResponse
+
+			select {
+			case <-auctionContext.Done():
+				// Log done.
+			case this.table <- <-bidResponse:
+				// Log bid.
+			}
 		}()
 	}
 
 	// No need to wait to finish to block the operation.
 	go func() {
 		wg.Wait()
-		done <- true
+		close(done)
 	}()
 
 	return this.hammer(done)
