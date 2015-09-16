@@ -5,3 +5,8 @@ type Auction interface {
 	InviteAll(bidders []Bidder)
 	Run(bidRequest *BidRequest) <-chan Result
 }
+
+
+func NewAuction() Auction {
+	return &SimpleAuction{}
+}
