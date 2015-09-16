@@ -1,6 +1,8 @@
 package auction
+import "io"
 
 type Result interface {
 	IsCompleted() bool
-	GetResponse() Response
+	Price() float64
+	Write(writer io.Writer)
 }
