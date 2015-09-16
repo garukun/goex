@@ -1,4 +1,4 @@
-package auction
+package types
 import "encoding/json"
 
 // A boolean type to be marshaled into 0 or 1.

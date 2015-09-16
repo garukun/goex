@@ -1,5 +1,8 @@
 package auction
-import "time"
+import (
+	"time"
+	"github.com/garukun/goex/auction/types"
+)
 
 type BidRequest struct {
 	Id string `json:"id"` // TODO(stevej): Embed Identifiable struct?
@@ -26,7 +29,7 @@ type Impression struct {
 	// No native.
 	DisplayManager string `json:"displaymanager"`
 	DisplayManagerVersion string `json:"displaymangerver"`
-	IsInterstitial NumericBool `json:"instl"`
+	IsInterstitial types.NumericBool `json:"instl"`
 	// No tagid.
 	BidFloorPrice float64 `json:"bidfloor"`
 	BidFloorCurrency Currency `json:"bidfloorcur"`
