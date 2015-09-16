@@ -1,4 +1,4 @@
-package auction
+package types
 
 type BidResponse struct {
 

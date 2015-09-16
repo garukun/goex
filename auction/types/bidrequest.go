@@ -1,4 +1,4 @@
-package auction
+package types
 import (
 	"time"
 	"github.com/garukun/goex/auction/types"

@@ -1,6 +1,9 @@
 package auction
-import "golang.org/x/net/context"
+import (
+"golang.org/x/net/context"
+"github.com/garukun/goex/auction/types"
+)
 
 type Bidder interface {
-	Bid(auctionContext context.Context, bidRequest *BidRequest) (<-chan *BidResponse, error)
+	Bid(auctionContext context.Context, bidRequest *types.BidRequest) (<-chan *types.BidResponse, error)
 }

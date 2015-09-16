@@ -1,7 +1,10 @@
 package auction
-import "time"
+import (
+	"time"
+	"github.com/garukun/goex/auction/types"
+)
 
 type Config struct {
 	Timeout time.Duration
-	AuctionType AuctionType
+	AuctionType types.AuctionType
 }

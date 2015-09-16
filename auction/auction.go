@@ -1,9 +1,10 @@
 package auction
+import "github.com/garukun/goex/auction/types"
 
 type Auction interface {
 	Invite(bidder Bidder)
 	InviteAll(bidders []Bidder)
-	Run(bidRequest *BidRequest) <-chan Result
+	Run(bidRequest *types.BidRequest) <-chan Result
 }
 
 
