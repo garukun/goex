@@ -1,4 +1,5 @@
 package auction
+
 import "golang.org/x/net/context"
 
 type wrapper struct {

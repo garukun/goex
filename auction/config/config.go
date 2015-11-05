@@ -1,8 +1,9 @@
 package auction
+
 import (
-	"time"
-	"github.com/garukun/goex/auction/types"
 	"flag"
+	"github.com/garukun/goex/auction/types"
+	"time"
 )
 
 const DEFAULT_AUCTION_TIMEOUT = 50 * time.Millisecond
@@ -11,7 +12,7 @@ var timeout *time.Duration
 var auctionType *types.AuctionType
 
 func init() {
-	timeout = flag.Duration("auction_timeout", DEFAULT_AUCTION_TIMEOUT, "Duration for how long the auction should run.")
+	timeout = flag.Duration("auction_timeout", DEFAULT_AUCTION_TIMEOUT, "Duration for how long the auction should run, eg. 200ms.")
 	auctionType = flag.Uint("auction_type", 2, "Auction type, eg. first or second priced auction.")
 
 	validateFlags()

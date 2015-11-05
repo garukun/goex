@@ -1,7 +1,8 @@
 package auction
+
 import (
-"golang.org/x/net/context"
-"github.com/garukun/goex/auction/types"
+	"github.com/garukun/goex/auction/types"
+	"golang.org/x/net/context"
 )
 
 type Bidder interface {

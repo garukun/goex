@@ -1,7 +1,8 @@
 package auction
+
 import (
-	"sync"
 	"golang.org/x/net/context"
+	"sync"
 )
 
 type SimpleAuction struct {
@@ -11,8 +12,8 @@ type SimpleAuction struct {
 	table chan *BidResponse
 }
 
-func (this *SimpleAuction) Invite(bidder Bidder) {
-	this.bidders = append(this.bidders, bidder)
+func (this *SimpleAuction) Invite(bidders []Bidder) {
+	this.bidders = append(this.bidders, bidders...)
 }
 
 func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
@@ -46,7 +47,9 @@ func (this *SimpleAuction) Run(bidRequest *BidRequest) <-chan Result {
 		close(done)
 	}()
 
-	return this.hammer(done)
+	result := this.hammer(done)
+	defer close(result)
+	return <-result
 }
 
 // Act of hammering to follow through the bids to finalize on the Hammer Price of the auction.
@@ -57,7 +60,7 @@ func (this *SimpleAuction) hammer(done <-chan bool) <-chan Result {
 	go func() {
 		for {
 			select {
-			case bid := <- this.table:
+			case bid := <-this.table:
 				if canOutbid(winner, bid) {
 					winner = bid
 				}
@@ -79,6 +82,5 @@ func (this *SimpleAuction) hammer(done <-chan bool) <-chan Result {
 // TODO(stevej): This should probably be Bid instead of BidResponse, and also refactored into a
 // BidResponse/Bid interface.
 func canOutbid(left, right *BidResponse) bool {
-	return false;
+	return false
 }
-
